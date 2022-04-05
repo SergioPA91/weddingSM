@@ -220,7 +220,7 @@ $(document).ready(function () {
         if (MD5($('#invite_code').val()) !== '65d4a95daf99c88e06392b6e59b1d2eb') {
             $('#alert-wrapper').html(alert_markup('danger', MD5($('#invite_code').val())));
         } else {
-            $.post('https://script.google.com/macros/s/AKfycbyhhSAi5CLwa1Z619eiiotzLu7Q7acy5BNWJINIUY1RVyMtAur7DkSQgqha7LZLQzx0EA/exec', data)
+            $.post('https://script.google.com/macros/s/AKfycbxPVIz9AVMUOeuLbxPu7ckkmk1p7oXKo6yoarGe_iHIMFVWwsKAytbBhqqpc01qgD4DqQ/exec', data)
                 .done(function (data) {
                     console.log(data);
                     if (data.result === "error") {
