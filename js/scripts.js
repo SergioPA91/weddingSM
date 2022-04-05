@@ -214,6 +214,9 @@ $(document).ready(function () {
 
         $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
 
+        console.log($('#invite_code').val());
+        console.log(MD5($('#invite_code').val()));
+
         if (MD5($('#invite_code').val()) !== '65d4a95daf99c88e06392b6e59b1d2eb') {
             $('#alert-wrapper').html(alert_markup('danger', MD5($('#invite_code').val())));
         } else {
