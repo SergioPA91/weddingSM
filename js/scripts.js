@@ -184,23 +184,23 @@ $(document).ready(function () {
         },
         data: {
             // Event title
-            title: "Ram and Antara's Wedding",
+            title: "Boda de Maria del Mar y Sergio",
 
             // Event start date
-            start: new Date('Nov 27, 2017 10:00'),
+            start: new Date('Nov 19, 2022 13:00'),
 
             // Event duration (IN MINUTES)
             // duration: 120,
 
             // You can also choose to set an end time
             // If an end time is set, this will take precedence over duration
-            end: new Date('Nov 29, 2017 00:00'),
+            end: new Date('Nov 20, 2022 00:00'),
 
             // Event Address
-            address: 'ITC Fortune Park Hotel, Kolkata',
+            address: 'Casería Las Palmeras, Jaén',
 
             // Event Description
-            description: "We can't wait to see you on our big day. For any queries or issues, please contact Mr. Amit Roy at +91 9876543210."
+            description: "¡Tenemos muchas ganas de veros en nuestro gran día!. Para cualquier tema consultar con los novios"
         }
     });
 
@@ -212,19 +212,19 @@ $(document).ready(function () {
         e.preventDefault();
         var data = $(this).serialize();
 
-        $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+        $('#alert-wrapper').html(alert_markup('info', '<strong>¡Espera un segundo!</strong> Estamos guardando todos los datos'));
 
         console.log($('#invite_code').val());
         console.log(MD5($('#invite_code').val()));
 
         if (MD5($('#invite_code').val()) !== '65d4a95daf99c88e06392b6e59b1d2eb') {
-            $('#alert-wrapper').html(alert_markup('danger', MD5($('#invite_code').val())));
+            $('#alert-wrapper').html(alert_markup('danger', 'El código de invitación introducido no es válido. Inténtelo de nuevo.'));
         } else {
             $.post('https://script.google.com/macros/s/AKfycbxPVIz9AVMUOeuLbxPu7ckkmk1p7oXKo6yoarGe_iHIMFVWwsKAytbBhqqpc01qgD4DqQ/exec', data)
                 .done(function (data) {
                     console.log(data);
                     if (data.result === "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
+                        $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo sentimos.</strong> Ha habido algún problema, inténtelo de nuevo más tarde '));
                     } else {
                         $('#alert-wrapper').html('');
                         $('#rsvp-modal').modal('show');
@@ -232,7 +232,7 @@ $(document).ready(function () {
                 })
                 .fail(function (data) {
                     console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo sentimos.</strong> Ha habido algún problema, inténtelo de nuevo más tarde '));
                 });
         }
     });
@@ -493,3 +493,48 @@ var MD5 = function (string) {
 
     return temp.toLowerCase();
 };
+
+
+(function () {
+    const second = 1000,
+          minute = second * 60,
+          hour = minute * 60,
+          day = hour * 24;
+  
+    //I'm adding this section so I don't have to keep updating this pen every year :-)
+    //remove this if you don't need it
+    let today = new Date(),
+        dd = String(today.getDate()).padStart(2, "0"),
+        mm = String(today.getMonth() + 1).padStart(2, "0"),
+        yyyy = today.getFullYear(),
+        nextYear = yyyy,
+        dayMonth = "11/19/",
+        birthday = dayMonth + yyyy;
+    
+    today = mm + "/" + dd + "/" + yyyy;
+    if (today > birthday) {
+      birthday = dayMonth + nextYear;
+    }
+    //end
+    
+    const countDown = new Date(birthday).getTime(),
+        x = setInterval(function() {    
+  
+          const now = new Date().getTime(),
+                distance = countDown - now;
+  
+          document.getElementById("days").innerText = Math.floor(distance / (day)),
+            document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+  
+          //do something later when date is reached
+          if (distance < 0) {
+            document.getElementById("headline").innerText = "¡Llegó el gran día!";
+            document.getElementById("countdown").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            clearInterval(x);
+          }
+          //seconds
+        }, 0)
+    }());
